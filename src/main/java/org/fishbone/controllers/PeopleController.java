@@ -46,7 +46,10 @@ public class PeopleController {
 
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-       peopleService.save(person);
+        if (bindingResult.hasErrors()) {
+            return "people/new";
+        }
+        peopleService.save(person);
         return "redirect:/people";
     }
 
