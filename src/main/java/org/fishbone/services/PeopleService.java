@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.fishbone.models.Mood;
 import org.fishbone.models.Person;
 import org.fishbone.repositories.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class PeopleService {
     @Transactional
     public void save(Person person){
         person.setCreatedAt(new Date());
+        person.setMood(Mood.CRAZY);
         peopleRepository.save(person);
     }
 
