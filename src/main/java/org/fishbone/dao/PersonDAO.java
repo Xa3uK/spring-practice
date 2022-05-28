@@ -2,6 +2,7 @@ package org.fishbone.dao;
 
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.Query;
 import org.fishbone.models.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,19 +22,20 @@ public class PersonDAO {
 
     @Transactional(readOnly = true)
     public List<Person> index() {
-        Session session = sessionFactory.getCurrentSession();
-
-        List<Person> people = session.createQuery("select p from Person p", Person.class).getResultList();
-        return people;
+        return sessionFactory.getCurrentSession().createQuery("select p from Person p", Person.class).getResultList();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Person show(int id) {
         return sessionFactory.getCurrentSession().get(Person.class, id);
     }
 
-    public Optional<Person> show(String email) {
-        return null;
+    @Transactional(readOnly = true)
+    public Person show(String email) {
+//        Query query = sessionFactory.getCurrentSession().createQuery("from Person p where p.email= :email");
+//       query.setParameter("email", email);
+//       List persons = query.getResultList();
+//       return (Person) persons.get(0);
     }
 
     @Transactional
@@ -48,7 +50,7 @@ public class PersonDAO {
 
     @Transactional
     public void delete(int id) {
-        Person person = sessionFactory.getCurrentSession().get(Person.class, id);
-        sessionFactory.getCurrentSession().delete(person);
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(session.get(Person.class, id));
     }
 }

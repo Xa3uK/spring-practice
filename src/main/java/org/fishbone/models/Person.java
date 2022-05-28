@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -33,4 +34,9 @@ public class Person {
     @Min(0)
     @Column(name = "age")
     private int age;
+
+    @NotEmpty(message = "Email should not be empty")
+    @Email(message = "Email should be valid")
+    @Column(name = "email")
+    private String email;
 }
